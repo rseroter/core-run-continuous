@@ -1,0 +1,5 @@
+steps:
+- name: 'gcr.io/k8s-skaffold/pack'
+  entrypoint: 'pack'
+  args: ['build', '--builder=gcr.io/buildpacks/builder', '--publish', 'gcr.io/seroter-project-base/core-run-continuous:$BUILD_ID']
+  id: Build and package .net app

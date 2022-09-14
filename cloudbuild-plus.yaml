@@ -1,0 +1,14 @@
+steps:
+- name: 'gcr.io/k8s-skaffold/pack'
+  entrypoint: 'pack'
+  args: ['build', '--builder=gcr.io/buildpacks/builder', '--publish', 'gcr.io/seroter-project-base/core-run-continuous:$BUILD_ID']
+  id: Build and package .net app
+- name: gcr.io/google.com/cloudsdktool/cloud-sdk
+  args: 
+      [
+        "deploy", "releases", "create", "test-release-001",
+        "--delivery-pipeline", "seroter-cloud-run-pipeline",
+        "--region", "us-central1",
+        "--images", "core-run-continuous=gcr.io/seroter-project-base/core-run-continuous:$BUILD_ID"
+      ]
+  entrypoint: gcloud
